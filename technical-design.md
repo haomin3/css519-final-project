@@ -37,22 +37,22 @@ The cloud server also acts as the central enforcement point for access control. 
 ### 3.2 Client
 The client connects to the cloud server and requests operations such as querying, uploading, or downloading files. A client is not allowed to access protected operations until it has successfully completed the authentication process. For the purposes of this project, the client will be simulated through `curl` requests from the command line.
 
-During the authentication stage, the client sends a password along with a client ID. If authentication succeeds, the client is issued a session token for later communication with the server to perform other functions such as query, upload, and download.
+During the authentication stage, the client sends a username and password. If authentication succeeds, the client is issued a session token for later communication with the server to perform other functions such as query, upload, and download.
 
 ### 3.3 Authentication Component
-The authentication component is responsible for verifying that a client is authorized before file access is granted. Currently, only a client ID and password is needed for authentication.
+The authentication component is responsible for verifying that a client is authorized before file access is granted. Currently, only a username and password are needed for authentication.
 
 This design could be improved later with a multi-step authentication process based on asymmetric cryptography. In this improved design, the client sends a password and timestamp encrypted with the cloud's public key. The password is used as an initial credential and to identify which client key should be associated with the request. After decrypting the message, the cloud checks whether the timestamp falls within a small allowed time window in order to reduce replay attacks. If the initial password check succeeds, the cloud generates a cryptographic challenge and encrypts it using the client's public key. The client must respond by signing the challenge with its private key, allowing the cloud to verify the client's identity. The cloud may also respond after a fixed delay regardless of success or failure in order to reduce timing-based information leakage.
 
 ### 3.4 Session Management
 After successful authentication, the cloud issues a session token for the client. This session token is used for later requests such as querying, uploading, or downloading files. Once the session token is issued, the client is considered trusted for the duration of that session.
 
-To reduce long-term exposure, the session key expires after a period of inactivity. A new authentication process is then required before protected operations can continue.
+To reduce long-term exposure, the session token expires after a fixed period of time following successful authentication. Once the token expires, the client must authenticate again before protected operations can continue.
 
 ### 3.5 File Storage
 The server stores uploaded files and retrieves them when authorized clients request downloads. To keep the design manageable, the initial version will likely use a simple local storage structure on the server rather than a more advanced storage architecture.
 
-For the initial prototype, file data may persist across basic container restarts as long as the same container instance is reused, which may be sufficient for testing. However, this is not a form of reliable persistence, as recreating the container can remove that data. If stronger persistence is needed, a Docker volume or bind mount can be used.
+For the initial prototype, uploaded files are stored in memory in order to simulate persistence-related behavior for testing. This allows upload, list, and download operations to interact consistently during runtime, but the data is lost when the server process stops or the container is recreated. If stronger persistence is needed, a Docker volume or bind can be used later.
 
 ### 3.6 Logging
 The system will log important events such as successful authentication attempts, failed authentication attempts, blocked clients, upload requests, download requests, and denied access attempts. These logs will support the incident response focus of the project and make it easier to review suspicious or abnormal behavior.
@@ -61,38 +61,45 @@ The system will log important events such as successful authentication attempts,
 The initial version of the project will expose callable HTTP API endpoints for testing and mock implementation purposes. Responses will be returned in JSON format.
 
 - `GET /health`
-  Returns a simple status response indicating that the server is running.
+  Returns a simple JSON status response indicating that the server is running.
 
 - `POST /auth`
-  Accepts client credentials and returns either a successful authentication response or an error response.
+  Accepts a JSON request containing a username and password. If authentication succeeds, it returns a session token in JSON format. Otherwise, it returns an error response in JSON format.
 
 - `GET /files`
-  Returns a list of available files for an authenticated client, or an error response if the client is not authenticated.
+  Accepts an authenticated request and returns a JSON list of available files. If the client is not authenticated, it returns an error response in JSON format.
 
-- `POST /files/upload`
-  Accepts an authenticated file upload request and returns either a success response or an error response.
+- `POST /upload`
+  Accepts an authenticated JSON request containing a target filename and file content. If the request is valid, it stores or simulates storing the file and returns a success response in JSON format. Otherwise, it returns an error response in JSON format.
 
-- `GET /files/download/{filename}`
-  Returns the requested file for an authenticated client if it exists, or an error response if it does not exist or if the client is not authenticated.
+- `POST /download`
+  Accepts an authenticated JSON request containing a target filename and returns the requested file content if it exists. Otherwise, it returns an error response in JSON format.
 
 ## 4. End-to-End Workflows
 ### 4.1 Authenticate and List Files
-A client sends credentials to the authentication endpoint. If authentication succeeds, the client requests a list of available files. After that, the client does not find the file they want and exits.
+A client sends credentials to the authentication endpoint. If authentication succeeds, the client sends an authenticated request to retrieve the list of available files. The server returns the file list in JSON format, and the client exits after reviewing the result.
 
-- Valid input: Correct client credentials
-- Invalid input: Incorrect credentials or missing fields
-- Error handling: Returns an authentication failure or bad request response in JSON format
+- Valid input: Correct username and password, followed by a valid session token
+- Invalid input: Incorrect credentials, missing fields, or missing/invalid session token
+- Error handling: Returns an authentication failure, bad request, or unauthorized response in JSON format
 
 ### 4.2 Authenticate and Upload a File
-A client first authenticates, then sends a file upload request. If the request is accepted, the server stores the file or simulates storing it and returns a success response. The client exits after successfully stores the target file onto the server.
+A client first authenticates, then sends an authenticated JSON upload request containing a target filename and file content. If the request is accepted, the server stores the file in memory and returns a success response. The client exits after successfully storing the target file on the server.
 
 - Valid input: Authenticated request with a valid file name and content
 - Invalid input: Missing authentication, missing file name, or empty content
 - Error handling: Returns an unauthorized or bad request response in JSON format
 
 ### 4.3 Authenticate and Download a File
-A client first authenticates, then requests a file by name. If the file exists and the client is authorized, the server returns the file or simulated file content. The client then exits after receiving the target file.
+A client first authenticates, then sends an authenticated JSON request containing a target filename to the download endpoint. If the file exists and the client is authorized, the server returns the file content in JSON format.
 
 - Valid input: Authenticated request for an existing file
 - Invalid input: Missing authentication or nonexistent file name
 - Error handling: Returns an unauthorized, bad request, or not found response in JSON format
+
+### 4.4 Repeated Failed Authentication
+A client repeatedly sends incorrect credentials to the authentication endpoint. After too many failed attempts, the server temporarily blocks further authentication attempts for that username and returns an error response.
+
+- Valid input: N/A
+- Invalid input: Incorrect username/password combinations
+- Error handling: Returns an authentication failure response, and after repeated failures returns a temporary block response in JSON format
