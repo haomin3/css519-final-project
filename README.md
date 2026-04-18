@@ -7,3 +7,6 @@ This repository holds all relevant files for the CSS 519 Final Project.
 - [(HW2) Threat Model](threat-model.md)
 - [(HW2) Initial Security Test Documentation](initial-security-test.md)
 - [(HW2) Gap and Improvement Analysis](gap-improvement-analysis.md)
+- [(HW3) Operational State Questions](operational-state-questions.md)
+- [(HW3) OE Dashboard Metrics](oe-dashboard-metrics.md)
+- [(HW3) Oncall Dashboard Analysis](oncall-dashboard-analysis.md)
