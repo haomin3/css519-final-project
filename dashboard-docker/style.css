@@ -1,0 +1,143 @@
+body {
+    background-color: #f5f7fb;
+    color: #212529;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.last-updated-label {
+    font-size: 0.9rem;
+}
+
+.last-updated-value {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.metric-card,
+.chart-card,
+.table-card {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.chart-range {
+    max-width: 140px;
+    min-width: 120px;
+}
+
+.chart-card canvas {
+    height: 300px !important;
+}
+
+.metric-label {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.metric-subtext {
+    margin-top: 0.5rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.session-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.session-row:last-child {
+    border-bottom: none;
+}
+
+.session-key {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.session-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.table-scroll {
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid #eef1f4;
+    border-radius: 8px;
+}
+
+.event-search {
+    width: 100%;
+    max-width: 600px;
+}
+
+.severity-badge {
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+}
+
+.severity-info {
+    background-color: #e9f3ff;
+    color: #0d6efd;
+}
+
+.severity-warn {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.severity-error {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.status-healthy {
+    color: #198754;
+}
+
+.status-warning {
+    color: #ffc107;
+}
+
+.status-down {
+    color: #dc3545;
+}
