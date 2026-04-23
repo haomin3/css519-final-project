@@ -13,12 +13,16 @@ public class MockCloudServerMain {
     public static final int MAX_CONNECTIONS = 3;
     public static final int ACCESS_PORT = 8080;
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("Starting server on http://localhost:" + ACCESS_PORT);
-
+    static HttpServer startServer() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(ACCESS_PORT), 0);
-        CloudContexts.register(server);
+        CloudContexts.register(server, new AuthManager(), new FileStorage());
         server.setExecutor(Executors.newFixedThreadPool(MAX_CONNECTIONS));
         server.start();
+        return server;
+    }
+
+    public static void main(String[] args) throws IOException {
+        System.out.println("Starting server on http://localhost:" + ACCESS_PORT);
+        startServer();
     }
 }

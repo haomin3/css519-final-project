@@ -1,6 +1,7 @@
 package com.haomin.handler;
 
 import com.google.gson.JsonSyntaxException;
+import com.haomin.AuthManager;
 import com.haomin.AuthUtils;
 import com.haomin.FileStorage;
 import com.haomin.HttpUtils;
@@ -11,6 +12,14 @@ import java.io.IOException;
 import java.util.Map;
 
 public class UploadHandler implements HttpHandler {
+    private final AuthManager authManager;
+    private final FileStorage fileStorage;
+
+    public UploadHandler(AuthManager authManager, FileStorage fileStorage) {
+        this.authManager = authManager;
+        this.fileStorage = fileStorage;
+    }
+
     @Override
     /* Use the command below to check:
     curl -i -X POST http://localhost:8080/upload \
@@ -29,7 +38,8 @@ public class UploadHandler implements HttpHandler {
         }
 
         // Checking session token
-        if(!AuthUtils.hasValidSession(exchange)) {
+        String token = AuthUtils.getSessionToken(exchange);
+        if(!authManager.isValidToken(token)) {
             HttpUtils.sendJson(exchange, 401, Map.of(
                     "success", false,
                     "error", "invalid_or_missing_session"
@@ -69,7 +79,7 @@ public class UploadHandler implements HttpHandler {
         }
 
         // Everything ok. Uploading file...
-        FileStorage.saveFile(request.name, request.content);
+        fileStorage.saveFile(request.name, request.content);
         HttpUtils.sendJson(exchange, 200, Map.of(
                 "success", true,
                 "name", request.name

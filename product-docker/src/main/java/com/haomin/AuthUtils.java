@@ -8,9 +8,4 @@ public class AuthUtils {
     public static String getSessionToken(HttpExchange exchange) {
         return exchange.getRequestHeaders().getFirst(SESSION_HEADER);
     }
-
-    public static boolean hasValidSession(HttpExchange exchange) {
-        String token = getSessionToken(exchange);
-        return AuthManager.isValidToken(token);
-    }
 }
