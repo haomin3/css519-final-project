@@ -73,3 +73,11 @@ The server should return HTTP 200 and confirm the uploaded file name.
 
 **Expected Result:**  
 The server should return HTTP 200 and return the requested file content.
+
+-----
+
+### Test 6: Invalid HTTP Method Is Rejected
+**Objective:** Verify that endpoints reject unsupported HTTP methods.
+
+**Expected Result:**  
+The server should return HTTP 405 with a `method_not_allowed` error when an unsupported method is used.
