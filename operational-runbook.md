@@ -41,9 +41,10 @@ The oncall engineer should confirm:
 
 ---
 
-## 2. Runbook Scenario 1: Authentication or Session-Control Failure
+## 2. Runbook Scenarios
 
-### 2.1 Identify Problem
+### 2.1 Authentication or Session-Control Failure
+#### 2.1.1 Identify Problem
 This scenario applies when authentication or session-related protections are not working as expected. Examples include invalid credentials being accepted, protected endpoints accessible without a valid session token, or temporary blocking not triggering after repeated failed login attempts.
 
 Typical signs include:
@@ -51,7 +52,7 @@ Typical signs include:
 - Unexpected HTTP 200 responses where HTTP 401 or HTTP 403 should have been returned
 - A dashboard spike in failed authentication attempts or blocked users without normal control behavior
 
-### 2.2 Data Gathering
+#### 2.1.2 Data Gathering
 The oncall engineer should determine whether the issue is with credential validation, token validation, or failed-login handling. For this project, the most relevant checks are recent authentication-related tests, recent endpoint responses, blocked-user count, and authentication trend data. Authentication attempts and denied access attempts should also be treated as useful incident response signals.
 
 The oncall engineer should gather:
@@ -61,7 +62,7 @@ The oncall engineer should gather:
 - Whether repeated failures were recorded before the issue occurred
 - Whether the issue is affecting only one endpoint or all protected endpoints
 
-### 2.3 Mitigation and Recovery
+#### 2.1.3 Mitigation and Recovery
 If authentication controls are failing, the immediate goal is to restore expected access control behavior. Depending on the issue, this may involve correcting auth logic, fixing session-token validation, restoring temporary blocking behavior, or restarting the affected service after a verified fix.
 
 Possible actions include:
@@ -70,7 +71,7 @@ Possible actions include:
 - Restore repeated-failure handling if temporary blocking is not working
 - Re-test protected endpoints after the change
 
-### 2.4 Continued Monitoring
+#### 2.1.4 Continued Monitoring
 After the issue is corrected, the oncall engineer should confirm that invalid credentials are rejected, protected endpoints once again require a valid session token, and repeated failed login attempts trigger temporary blocking as expected.
 
 The oncall engineer should verify:
@@ -79,9 +80,10 @@ The oncall engineer should verify:
 - Blocked-user counts and denied requests appear reasonable
 - No protected endpoint is accessible without valid authentication
 
-## 3. Runbook Scenario 2: Malformed Request or API Misuse Spike
+---
 
-### 3.1 Identify Problem
+### 2.2 Malformed Request or API Misuse Spike
+#### 2.2.1 Identify Problem
 This scenario applies when the service begins receiving a large number of malformed requests, unsupported methods, or other invalid API usage. This may indicate client misuse, probing, or low-effort attack traffic rather than normal use.
 
 Typical signs include:
@@ -89,7 +91,7 @@ Typical signs include:
 - Numerous `method_not_allowed` errors
 - A sudden rise in rejected requests in the OE dashboard error graph
 
-### 3.2 Data Gathering
+#### 2.2.2 Data Gathering
 The oncall engineer should determine whether the traffic is coming from a broken client, a user mistake, or a suspicious request pattern. For this project, the main indicators are the specific error types being returned, which endpoints are involved, whether the issue is concentrated around one workflow, and whether recent operational events show repeated similar failures.
 
 The oncall engineer should gather:
@@ -99,7 +101,7 @@ The oncall engineer should gather:
 - Whether the pattern appears isolated or repeated
 - Whether there are related signs of probing or abuse
 
-### 3.3 Mitigation and Recovery
+#### 2.2.3 Mitigation and Recovery
 The immediate goal is to keep the service stable and make sure invalid requests are still being rejected properly. If the issue is caused by a client error, the client behavior should be corrected. If the pattern appears suspicious, the oncall engineer should continue rejecting the traffic and focus on preserving service availability.
 
 Possible actions include:
@@ -108,7 +110,7 @@ Possible actions include:
 - Review whether repeated bad requests are reducing availability
 - Restart the service only if it becomes unstable or validation behavior unexpectedly changes 
 
-### 3.4 Continued Monitoring
+#### 2.2.4 Continued Monitoring
 After mitigation, the oncall engineer should confirm that invalid requests are still rejected correctly and that the error spike is no longer growing abnormally.
 
 The oncall engineer should verify:
@@ -117,9 +119,10 @@ The oncall engineer should verify:
 - Service health and response behavior remain stable
 - No related issue has spread to other endpoints
 
-## 4. Runbook Scenario 3: Suspicious File Access or Modification Issue
+---
 
-### 4.1 Identify Problem
+### 2.3 Suspicious File Access or Modification Issue
+#### 2.3.1 Identify Problem
 This scenario applies when file-related behavior becomes suspicious or incorrect. Examples include unexpected upload behavior, incorrect file listings, unexpected download failures, or indications that files may have been overwritten, replaced, or accessed in an unintended way.
 
 Typical signs include:
@@ -127,7 +130,7 @@ Typical signs include:
 - Users report missing or changed file content
 - The dashboard shows unusual upload, download, or file-not-found activity
 
-### 4.2 Data Gathering
+#### 2.3.2 Data Gathering
 The oncall engineer should determine whether the issue is related to authentication, file existence checks, overwrite behavior, or incorrect client input. Since the current system stores files in memory and allows files to be overwritten by filename, the investigation should focus on whether the file state changed unexpectedly and whether the requesting client was properly authenticated.
 
 The oncall engineer should gather:
@@ -137,7 +140,7 @@ The oncall engineer should gather:
 - Whether the file existed before the issue occurred
 - Whether recent file-related events suggest overwrite or misuse
 
-### 4.3 Mitigation and Recovery
+#### 2.3.3 Mitigation and Recovery
 The immediate goal is to restore correct file behavior and prevent further unintended modification or access. In this small project, recovery may involve correcting request validation, restoring expected file handling logic, restarting the service if in-memory state is no longer trustworthy, or temporarily avoiding the affected operation until the issue is resolved.
 
 Possible actions would include:
@@ -146,7 +149,7 @@ Possible actions would include:
 - Restore expected behavior through a code fix or service restart
 - Re-check whether overwrite behavior needs tighter control
 
-### 4.4 Continued Monitoring
+#### 2.3.4 Continued Monitoring
 After recovery, the oncall engineer should confirm that file listing, upload, and download behavior are once again operating as expected and that suspicious file-related events are no longer increasing.
 
 The oncall engineer should verify:
