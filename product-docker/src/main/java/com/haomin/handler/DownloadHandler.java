@@ -1,6 +1,7 @@
 package com.haomin.handler;
 
 import com.google.gson.JsonSyntaxException;
+import com.haomin.AuthManager;
 import com.haomin.AuthUtils;
 import com.haomin.FileStorage;
 import com.haomin.HttpUtils;
@@ -11,6 +12,14 @@ import java.io.IOException;
 import java.util.Map;
 
 public class DownloadHandler implements HttpHandler {
+    private final AuthManager authManager;
+    private final FileStorage fileStorage;
+
+    public DownloadHandler(AuthManager authManager, FileStorage fileStorage) {
+        this.authManager = authManager;
+        this.fileStorage = fileStorage;
+    }
+
     @Override
     /* Use the following command to check:
     curl -i -X POST http://localhost:8080/download \
@@ -29,7 +38,8 @@ public class DownloadHandler implements HttpHandler {
         }
 
         // Checking session token
-        if(!AuthUtils.hasValidSession(exchange)) {
+        String token = AuthUtils.getSessionToken(exchange);
+        if(!authManager.isValidToken(token)) {
             HttpUtils.sendJson(exchange, 401, Map.of(
                     "success", false,
                     "error", "invalid_or_missing_session"
@@ -60,7 +70,7 @@ public class DownloadHandler implements HttpHandler {
         }
 
         // Checking that the requested file name exists
-        if(!FileStorage.fileExists(request.name)) {
+        if(!fileStorage.fileExists(request.name)) {
             HttpUtils.sendJson(exchange, 404, Map.of(
                     "success", false,
                     "error", "file_not_found"
@@ -72,7 +82,7 @@ public class DownloadHandler implements HttpHandler {
         HttpUtils.sendJson(exchange, 200, Map.of(
                 "success", true,
                 "name", request.name,
-                "content", FileStorage.getFileContent(request.name)
+                "content", fileStorage.getFileContent(request.name)
         ));
     }
 

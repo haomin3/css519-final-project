@@ -13,6 +13,12 @@ public class AuthHandler implements HttpHandler {
     private static final String VALID_USERNAME = "admin";
     private static final String VALID_PASSWORD = "password123";
 
+    private final AuthManager authManager;
+
+    public AuthHandler(AuthManager authManager) {
+        this.authManager = authManager;
+    }
+
     @Override
     /* Use the command below for correct auth:
     curl -i -X POST http://localhost:8080/auth \
@@ -52,7 +58,7 @@ public class AuthHandler implements HttpHandler {
         }
 
         // Too many failed attempts for this username
-        if(AuthManager.isBlocked(request.username)) {
+        if(authManager.isBlocked(request.username)) {
             HttpUtils.sendJson(exchange, 403, Map.of(
                     "success", false,
                     "error", "temporarily_blocked"
@@ -62,17 +68,17 @@ public class AuthHandler implements HttpHandler {
 
         // Issues session token if username and password is valid
         if(VALID_USERNAME.equals(request.username) && VALID_PASSWORD.equals(request.password)) {
-            AuthManager.clearFailures(request.username);
-            String sessionToken = AuthManager.createSessionToken();
+            authManager.clearFailures(request.username);
+            String sessionToken = authManager.createSessionToken();
             HttpUtils.sendJson(exchange, 200, Map.of(
                     "success", true,
                     "sessionToken", sessionToken
             ));
             return;
         }
-        AuthManager.recordFailure(request.username);
+        authManager.recordFailure(request.username);
 
-        // Invalid username or passwordA
+        // Invalid username or password
         HttpUtils.sendJson(exchange, 401, Map.of(
                 "success", false,
                 "error", "invalid_credentials"

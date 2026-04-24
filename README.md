@@ -12,3 +12,7 @@ This repository holds all relevant files for the CSS 519 Final Project.
 - [(HW3) OE Dashboard Metrics](oe-dashboard-metrics.md)
 - [(HW3) Oncall Dashboard Analysis](oncall-dashboard-analysis.md)
 - [(Presentation 1) Presentation Slides](presentation-1-slides.pdf)
+- [(HW4) Automated Security Test Document](automated-test-documentation.md)
+- [(HW4) Automated Tests Folder](/product-docker/src/test/java)
+- [(HW4) Operational Runbook Document](operational-runbook.md)
+- [(HW4) Unknown Unknowns Document](unknown-unknowns.md)

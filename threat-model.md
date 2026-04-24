@@ -123,3 +123,6 @@ Overall, the highest risks are concentrated around authentication, session handl
 - Weak authentication security due to simple credential handling
 - File integrity issues caused by overwrite behavior
 - Reduced accountability if user actions cannot be strongly tied to an identity
+
+## 9. Threat Model Review After Testing
+The threat model was reviewed after manual and automated testing. No changes were needed since the product design and implementation did not change significantly. Testing confirmed that expected controls, including authentication checks, session-token enforcement, invalid request rejection, and temporary blocking, are working. This means that the threat model is now partially supported by test evidence rather than only by design assumptions.

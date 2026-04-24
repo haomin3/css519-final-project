@@ -1,5 +1,6 @@
 package com.haomin.handler;
 
+import com.haomin.AuthManager;
 import com.haomin.AuthUtils;
 import com.haomin.FileStorage;
 import com.haomin.HttpUtils;
@@ -10,6 +11,14 @@ import java.io.IOException;
 import java.util.Map;
 
 public class FilesHandler implements HttpHandler {
+    private final AuthManager authManager;
+    private final FileStorage fileStorage;
+
+    public FilesHandler(AuthManager authManager, FileStorage fileStorage) {
+        this.authManager = authManager;
+        this.fileStorage = fileStorage;
+    }
+
     @Override
     // curl -i http://localhost:8080/files -H "Session-Token: <token>"
     public void handle(HttpExchange exchange) throws IOException {
@@ -23,7 +32,8 @@ public class FilesHandler implements HttpHandler {
         }
 
         // Verifies session token
-        if(!AuthUtils.hasValidSession(exchange)) {
+        String token = AuthUtils.getSessionToken(exchange);
+        if(!authManager.isValidToken(token)) {
             HttpUtils.sendJson(exchange, 401, Map.of(
                     "success", false,
                     "error", "invalid_or_missing_session"
@@ -34,7 +44,7 @@ public class FilesHandler implements HttpHandler {
         // Everything ok. Sending list of files...
         HttpUtils.sendJson(exchange, 200, Map.of(
                 "success", true,
-                "files", FileStorage.listFiles()
+                "files", fileStorage.listFiles()
         ));
     }
 }
