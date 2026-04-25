@@ -1,5 +1,6 @@
 # CSS 519 Final Project
-This repository holds all relevant files for the CSS 519 Final Project.
+This repository holds all relevant files for the CSS 519 Final Project.   
+The mock product now also includes a basic browser-based UI served by the same Java server for login, file listing, upload, and download.
 
 ## Navigation
 - [(HW1) Technical Design Document](technical-design.md)

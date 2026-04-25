@@ -18,6 +18,7 @@ To keep the project manageable, the following items are intentionally excluded f
 - Proper authentication with asymmetric keys
 - Key exchange, rotation or revocation support
 - Full web or GUI interface
+  - Update: A basic UI is now available at the `/` endpoint.
 - Distributed or replicated storage via RAID array
 - Automated intrusion detection features
 - Load balancing and fault tolerance
@@ -36,6 +37,8 @@ The cloud server also acts as the central enforcement point for access control. 
 
 ### 3.2 Client
 The client connects to the cloud server and requests operations such as querying, uploading, or downloading files. A client is not allowed to access protected operations until it has successfully completed the authentication process. For the purposes of this project, the client will be simulated through `curl` requests from the command line.
+
+**Update:** The project now also includes a basic browser-based UI served by the same Java server. This UI supports login, file listing, upload, and download in addition to command-line `curl` testing.
 
 During the authentication stage, the client sends a username and password. If authentication succeeds, the client is issued a session token for later communication with the server to perform other functions such as query, upload, and download.
 
@@ -58,7 +61,8 @@ For the initial prototype, uploaded files are stored in memory in order to simul
 The system will log important events such as successful authentication attempts, failed authentication attempts, blocked clients, upload requests, download requests, and denied access attempts. These logs will support the incident response focus of the project and make it easier to review suspicious or abnormal behavior.
 
 ### 3.7 API Endpoints
-The initial version of the project will expose callable HTTP API endpoints for testing and mock implementation purposes. Responses will be returned in JSON format.
+The initial version of the project will expose callable HTTP API endpoints for testing and mock implementation purposes. Responses will be returned in JSON format.   
+**Update:** These endpoints can now be tested either through `curl` or through the basic browser-based UI served from the same server.
 
 - `GET /health`
   Returns a simple JSON status response indicating that the server is running.

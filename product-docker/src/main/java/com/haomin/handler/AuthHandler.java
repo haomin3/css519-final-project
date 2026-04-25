@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.util.Map;
 
 public class AuthHandler implements HttpHandler {
-    private static final String VALID_USERNAME = "admin";
-    private static final String VALID_PASSWORD = "password123";
+    private static final Map<String, String> VALID_USERS = Map.of(
+            "admin", "password123",
+            "haomin", "reallylongpassword",
+            "test", "donotuse"
+    );
 
     private final AuthManager authManager;
 
@@ -67,9 +70,10 @@ public class AuthHandler implements HttpHandler {
         }
 
         // Issues session token if username and password is valid
-        if(VALID_USERNAME.equals(request.username) && VALID_PASSWORD.equals(request.password)) {
+        String expectedPassword = VALID_USERS.get(request.username);
+        if (expectedPassword != null && expectedPassword.equals(request.password)) {
             authManager.clearFailures(request.username);
-            String sessionToken = authManager.createSessionToken();
+            String sessionToken = authManager.createSessionToken(request.username);
             HttpUtils.sendJson(exchange, 200, Map.of(
                     "success", true,
                     "sessionToken", sessionToken

@@ -1,0 +1,80 @@
+body {
+    overflow: hidden;
+}
+
+/* Top bar sizing */
+.top-bar {
+    min-height: 72px;
+}
+
+/* Allow sidebar and content to scroll properly */
+.main-row {
+    min-height: 0;
+}
+
+.sidebar {
+    overflow-y: auto;
+}
+
+.content-area {
+    overflow-y: auto;
+}
+
+/* Keep alert spacing clean */
+#messageBox .alert {
+    margin-bottom: 0;
+}
+
+/* Downloaded file content box */
+.download-result {
+    min-height: 180px;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    background-color: #f8f9fa;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Improved status colors instead of default black */
+.status-good {
+    color: #198754;
+}
+
+.status-bad {
+    color: #dc3545;
+}
+
+.status-neutral {
+    color: #6c757d;
+}
+
+/* Keep table column widths more stable */
+.table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.col-name {
+    width: 40%;
+}
+
+.col-size {
+    width: 12%;
+}
+
+.col-uploaded-at {
+    width: 26%;
+}
+
+.col-uploaded-by {
+    width: 22%;
+}
+
+/* Prevent long values from stretching the whole table */
+.table td,
+.table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
