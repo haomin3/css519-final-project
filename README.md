@@ -1,5 +1,5 @@
 # CSS 519 Final Project
-This repository holds all relevant files for the CSS 519 Final Project.   
+This repository holds all relevant files for the CSS 519 Final Project, including Cloudsploitable, a vulnerable mock cloud server.   
 The mock product now also includes a basic browser-based UI served by the same Java server for login, file listing, upload, and download.
 
 ## Navigation
