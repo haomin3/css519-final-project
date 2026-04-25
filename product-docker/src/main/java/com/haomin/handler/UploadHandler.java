@@ -9,6 +9,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class UploadHandler implements HttpHandler {
@@ -79,7 +81,9 @@ public class UploadHandler implements HttpHandler {
         }
 
         // Everything ok. Uploading file...
-        fileStorage.saveFile(request.name, request.content);
+        String uploadedBy = authManager.getUsernameForToken(token);
+        String uploadedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        fileStorage.saveFile(request.name, request.content, uploadedAt, uploadedBy);
         HttpUtils.sendJson(exchange, 200, Map.of(
                 "success", true,
                 "name", request.name

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsploitable</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container-fluid vh-100 d-flex flex-column">
+    <!-- Top status bar -->
+    <div class="row border-bottom p-3 align-items-center top-bar">
+        <div class="col">
+            <h4 class="mb-0">Cloudsploitable: A Vulnerable Cloud Server</h4>
+        </div>
+        <div class="col text-end">
+            <span class="me-3">Server: <strong id="serverStatus" class="status-neutral">Unknown</strong></span>
+            <span class="me-3">User: <strong id="currentUser">None</strong></span>
+            <span>Token: <strong id="tokenState" class="status-bad">Missing</strong></span>
+        </div>
+    </div>
+
+    <div class="row flex-grow-1 main-row">
+        <!-- Left sidebar with collapsible sections -->
+        <div class="col-3 border-end p-3 bg-light sidebar">
+            <div class="d-grid gap-2 mb-3">
+                <button class="btn btn-primary" id="loginToggleBtn" type="button" data-bs-toggle="collapse" data-bs-target="#loginSection" aria-expanded="false" aria-controls="loginSection">
+                    Login
+                </button>
+
+                <button class="btn btn-outline-primary" id="refreshBtn" type="button" disabled>
+                    Refresh Files
+                </button>
+
+                <button class="btn btn-outline-primary" id="uploadToggleBtn" type="button" data-bs-toggle="collapse" data-bs-target="#uploadSection" aria-expanded="false" aria-controls="uploadSection" disabled>
+                    Upload
+                </button>
+
+                <button class="btn btn-outline-primary"  id="downloadToggleBtn" type="button" data-bs-toggle="collapse" data-bs-target="#downloadSection" aria-expanded="false" aria-controls="downloadSection" disabled>
+                    Download
+                </button>
+            </div>
+
+            <!-- Login form -->
+            <div class="collapse mb-3" id="loginSection">
+                <div class="card card-body">
+                    <h6 class="mb-3">Login</h6>
+
+                    <div class="mb-2">
+                        <label for="usernameInput" class="form-label">Username</label>
+                        <input type="text" id="usernameInput" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password</label>
+                        <input type="password" id="passwordInput" class="form-control">
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary" id="loginBtn" type="button">Submit Login</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload form -->
+            <div class="collapse mb-3" id="uploadSection">
+                <div class="card card-body">
+                    <h6 class="mb-3">Upload File</h6>
+
+                    <div class="mb-3">
+                        <label for="uploadFileInput" class="form-label">Choose Local File</label>
+                        <input type="file" id="uploadFileInput" class="form-control">
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="uploadNameInput" class="form-label">File Name</label>
+                        <input type="text" id="uploadNameInput" class="form-control" placeholder="example.txt">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="uploadContentInput" class="form-label">File Content</label>
+                        <textarea id="uploadContentInput" class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-outline-primary" id="uploadBtn" type="button">Submit Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download form -->
+            <div class="collapse" id="downloadSection">
+                <div class="card card-body">
+                    <h6 class="mb-3">Download File</h6>
+
+                    <div class="mb-3">
+                        <label for="downloadNameInput" class="form-label">File Name</label>
+                        <input type="text" id="downloadNameInput" class="form-control" placeholder="readme.txt">
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-outline-primary" id="downloadBtn" type="button">Submit Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main file table and download output -->
+        <div class="col p-3 content-area">
+            <h5>Files Available</h5>
+
+            <div id="messageBox" class="mb-3"></div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered align-middle">
+                    <thead>
+                    <tr>
+                        <th class="col-name">File Name</th>
+                        <th class="col-size">Size</th>
+                        <th class="col-uploaded-at">Uploaded At</th>
+                        <th class="col-uploaded-by">Uploaded By</th>
+                    </tr>
+                    </thead>
+                    <tbody id="filesTableBody">
+                    <tr>
+                        <td>&#8203;</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <h5>Downloaded File Content</h5>
+                <div id="downloadResult" class="download-result">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
