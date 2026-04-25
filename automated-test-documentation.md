@@ -1,5 +1,5 @@
-# Automated Test Documentation: Private Cloud File Server
-This document describes the automated tests for the Private Cloud File Server. The automated test set is divided into security tests and functional tests. Security tests verify that the system enforces protection mechanisms identified in the threat model, while functional tests verify that the main API workflows work as intended.
+# Automated Test Documentation: Cloudsploitable
+This document describes the automated tests for Cloudsploitable. The automated test set is divided into security tests and functional tests. Security tests verify that the system enforces protection mechanisms identified in the threat model, while functional tests verify that the main API workflows work as intended.
 
 ## 1. Test Approach and Environment
 The automated tests are implemented in JUnit as part of the Java project. The test source files are located under `product-docker/src/test/java` and are run through Maven. These tests are intended to verify representative security and functional behavior of the API without repeating the full manual test set.

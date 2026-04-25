@@ -1,5 +1,5 @@
-# Unknown Unknowns: Private Cloud File Server
-This document summarizes potential risks that are not yet fully understood or tested in the current version of the Private Cloud File Server. These are not confirmed issues, but areas where additional weaknesses may exist and may become more important as the project evolves.
+# Unknown Unknowns: Cloudsploitable
+This document summarizes potential risks that are not yet fully understood or tested in the current version of Cloudsploitable. These are not confirmed issues, but areas where additional weaknesses may exist and may become more important as the project evolves.
 
 ## Potential Unknown Unknowns
 - Upstream dependencies such as Java libraries and runtime components may contain vulnerabilities or unexpected behavior that have not yet been identified.

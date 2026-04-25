@@ -1,5 +1,5 @@
-# OE Dashboard Metrics: Private Cloud File Server
-This document describes the main data the Private Cloud File Server should emit so the OE dashboard can work properly. For this homework, the dashboard data is currently hard-coded, but the structure already exists for the dashboard to be connected to the actual Private Cloud File Server later if needed. The following metrics and event fields are the data needed for that connection.
+# OE Dashboard Metrics: Cloudsploitable
+This document describes the main data Cloudsploitable should emit so the OE dashboard can work properly. For this homework, the dashboard data is currently hard-coded, but the structure already exists for the dashboard to be connected to Cloudsploitable later if needed. The following metrics and event fields are the data needed for that connection.
 
 ## Dashboard Data Needed
 ### Top Summary Cards

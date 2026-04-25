@@ -1,5 +1,5 @@
-# Oncall Dashboard Analysis: Private Cloud File Server
-This document explains how an oncall engineer could use the OE dashboard if something goes wrong with the Private Cloud File Server. The dashboard is meant to help with quick triage by showing current health, response time, storage usage, active session and blocked user counts, authentication trends, error trends, and recent operational events.
+# Oncall Dashboard Analysis: Cloudsploitable
+This document explains how an oncall engineer could use the OE dashboard if something goes wrong with Cloudsploitable. The dashboard is meant to help with quick triage by showing current health, response time, storage usage, active session and blocked user counts, authentication trends, error trends, and recent operational events.
 
 ## How an Oncall Engineer Could Use the Dashboard
 ### 1. Check the top summary cards first

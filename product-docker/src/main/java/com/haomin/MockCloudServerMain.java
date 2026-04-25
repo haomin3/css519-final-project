@@ -6,7 +6,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 /**
- * This is a mock private cloud project for CSS 519
+ * This is the Cloudsploitable mock product for CSS 519
  * Expected environment: Java SE 21
  */
 public class MockCloudServerMain {

@@ -1,4 +1,4 @@
-# Operational State Questions: Private Cloud File Server
+# Operational State Questions: Cloudsploitable
 This document lists the main questions that should be answerable quickly from the OE dashboard, which is meant to give a quick view of current service health, recent activity, and possible warning signs before any deeper analysis begins.
 
 ## Main Questions

@@ -1,7 +1,7 @@
-# Threat Model: Private Cloud File Server
+# Threat Model: Cloudsploitable
 
 ## 1. Overview
-This document presents a threat model for the Private Cloud File Server. The system is an HTTP-based server that allows a client to authenticate with a username and password, receive a session token, and then use that token to access protected file operations such as listing files, uploading files, and downloading files.
+This document presents a threat model for Cloudsploitable. The system is an HTTP-based server that allows a client to authenticate with a username and password, receive a session token, and then use that token to access protected file operations such as listing files, uploading files, and downloading files.
 
 The system exposes endpoints for health checking, authentication, file listing, upload, and download. Authentication is required for file-related operations, and session tokens are used to authorize those requests. Uploaded files are stored in server memory during runtime, and the application runs as a Java-based service.
 

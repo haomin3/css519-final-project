@@ -1,7 +1,7 @@
-# Technical Design Document: Private Cloud File Server
+# Technical Design Document: Cloudsploitable
 
 ## 1. Project Overview
-This project is a simplified private cloud file server that allows authorized clients to upload and download files. The system is centered around a cloud server that manages client authentication and file operations. Before a client is allowed to perform uploads or downloads, it must first be authenticated by the server.
+This project is a simplified cloud server called Cloudsploitable that allows authorized clients to upload and download files. It is intentionally designed with certain security weaknesses so it can be used for testing, threat modeling, and incident response analysis. The system is centered around a server that manages client authentication and file operations. Before a client is allowed to perform uploads or downloads, it must first be authenticated by the server.
 
 The project is intentionally limited in scope so it can be completed within the course timeline. It is also intentionally designed with certain security flaws so that it can be better used for future testing and analysis. Instead of trying to build a full cloud platform, the design focuses on a smaller set of core features that are realistic to implement and relevant to the course's incident response focus.
 
