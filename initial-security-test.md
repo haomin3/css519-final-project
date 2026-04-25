@@ -1,7 +1,7 @@
-# Initial Security Test Documentation: Private Cloud File Server
+# Initial Security Test Documentation: Cloudsploitable
 
 ## 1. Overview
-This document records the initial security-related testing performed against the Private Cloud File Server. The purpose of these tests is to verify that the system enforces authentication for protected operations, rejects malformed or unauthorized requests, and responds correctly to both valid and invalid input.
+This document records the initial security-related testing performed against Cloudsploitable. The purpose of these tests is to verify that the system enforces authentication for protected operations, rejects malformed or unauthorized requests, and responds correctly to both valid and invalid input.
 
 The current test set focuses on authentication, session-based access control, request validation, and basic abuse resistance. These tests are meant to confirm the current security behavior of the system through direct HTTP request and response testing.
 

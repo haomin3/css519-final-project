@@ -1,5 +1,5 @@
-# Operational Runbook: Private Cloud File Server
-This document describes how an oncall engineer should respond when the Private Cloud File Server experiences a security-related failure, a serious operational issue, or other suspicious behavior that may require immediate investigation. The goal is to provide a practical process for identifying the problem, gathering relevant data, mitigating impact, restoring expected behavior, and confirming that the issue has been addressed. The runbook focuses on authentication, session control, request validation, file operations, and broader signs of service instability.
+# Operational Runbook: Cloudsploitable
+This document describes how an oncall engineer should respond when Cloudsploitable experiences a security-related failure, a serious operational issue, or other suspicious behavior that may require immediate investigation. The goal is to provide a practical process for identifying the problem, gathering relevant data, mitigating impact, restoring expected behavior, and confirming that the issue has been addressed. The runbook focuses on authentication, session control, request validation, file operations, and broader signs of service instability.
 
 ## 1. Common Investigation Workflow
 ### 1.1 Identify Problem

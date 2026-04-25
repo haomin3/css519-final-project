@@ -1,7 +1,7 @@
-# Gap and Improvement Analysis: Private Cloud File Server
+# Gap and Improvement Analysis: Cloudsploitable
 
 ## 1. Overview
-This document summarizes the main security gaps and potential improvements identified after completing the threat model and initial security testing for the Private Cloud File Server. The purpose of this analysis is to identify the most important weaknesses that remain in the current system and to outline practical areas for improvement.
+This document summarizes the main security gaps and potential improvements identified after completing the threat model and initial security testing for Cloudsploitable. The purpose of this analysis is to identify the most important weaknesses that remain in the current system and to outline practical areas for improvement.
 
 ## 2. Potential Security Gaps
 The main security gaps identified in the current system are listed below:
