@@ -17,3 +17,4 @@ The mock product now also includes a basic browser-based UI served by the same J
 - [(HW4) Automated Tests Folder](/product-docker/src/test/java)
 - [(HW4) Operational Runbook Document](operational-runbook.md)
 - [(HW4) Unknown Unknowns Document](unknown-unknowns.md)
+- [(HW5) CI/CD YAML File](.github/workflows/java-ci.yml)
