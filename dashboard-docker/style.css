@@ -141,3 +141,38 @@ body {
 .status-down {
     color: #dc3545;
 }
+
+.alert-metric-table th,
+.alert-metric-table td {
+    vertical-align: middle;
+}
+
+.alert-badge {
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+}
+
+.alert-ok {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.alert-warn {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-critical {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.alert-metric-table th:nth-child(2),
+.alert-metric-table td:nth-child(2) {
+    text-align: center;
+}

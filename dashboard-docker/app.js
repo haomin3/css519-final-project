@@ -4,9 +4,11 @@ let cachedEvents = [];
 
 async function loadDashboard() {
     const summary = await window.DashboardData.getSummaryData();
+    const customerRiskMetrics = await window.DashboardData.getCustomerRiskMetrics();
     cachedEvents = await window.DashboardData.getEventData();
-
+    
     renderSummary(summary);
+    renderCustomerRiskTable(customerRiskMetrics);
     await refreshAuthChart();
     await refreshErrorChart();
     renderEventTable(cachedEvents);
@@ -183,6 +185,37 @@ function buildSeverityBadge(severity) {
         return `<span class="severity-badge severity-warn">WARN</span>`;
     }
     return `<span class="severity-badge severity-error">ERROR</span>`;
+}
+
+function renderCustomerRiskTable(metrics) {
+    const tbody = document.getElementById("customerRiskTableBody");
+    tbody.innerHTML = "";
+
+    metrics.forEach(metric => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${metric.riskArea}</td>
+            <td>${buildAlertStatusBadge(metric.status)}</td>
+            <td>${metric.metric}</td>
+            <td>${metric.currentValue}</td>
+            <td>${metric.alertRule}</td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
+function buildAlertStatusBadge(status) {
+    const normalized = status.toUpperCase();
+
+    if (normalized === "OK") {
+        return `<span class="alert-badge alert-ok">OK</span>`;
+    }
+    if (normalized === "WARN") {
+        return `<span class="alert-badge alert-warn">WARN</span>`;
+    }
+    return `<span class="alert-badge alert-critical">CRITICAL</span>`;
 }
 
 function setupSearch(events) {
