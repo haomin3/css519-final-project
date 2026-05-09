@@ -19,3 +19,5 @@ The mock product now also includes a basic browser-based UI served by the same J
 - [(HW4) Unknown Unknowns Document](unknown-unknowns.md)
 - [(HW5) Basic CI/CD YAML File](.github/workflows/java-ci.yml)
 - [(HW5) CI/CD Gap Analysis Document](ci-cd-gap-analysis.md)
+- [(HW6) Customer Disruption Risks Document](customer-disruption-risks.md)
+- [(HW6) Manual Tests and Alert Gaps Document](manual-tests-and-alert-gaps.md)
