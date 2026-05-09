@@ -113,6 +113,114 @@ public class FileOperationsTest {
     }
 
     @Test
+    void validSessionCanAccessAllProtectedFileEndpoints() throws Exception {
+        HttpURLConnection filesConnection = createConnection("/files", "GET", sessionToken, null);
+
+        int filesStatus = filesConnection.getResponseCode();
+        String filesBody = readResponseBody(filesConnection);
+
+        assertEquals(200, filesStatus);
+        assertTrue(filesBody.contains("\"success\":true"));
+        assertTrue(filesBody.contains("\"files\""));
+
+        filesConnection.disconnect();
+
+        HttpURLConnection uploadConnection = createConnection(
+                "/upload",
+                "POST",
+                sessionToken,
+                "{\"name\":\"session-access-test.txt\",\"content\":\"session access test content\"}"
+        );
+
+        int uploadStatus = uploadConnection.getResponseCode();
+        String uploadBody = readResponseBody(uploadConnection);
+
+        assertEquals(200, uploadStatus);
+        assertTrue(uploadBody.contains("\"success\":true"));
+        assertTrue(uploadBody.contains("\"name\":\"session-access-test.txt\""));
+
+        uploadConnection.disconnect();
+
+        HttpURLConnection downloadConnection = createConnection(
+                "/download",
+                "POST",
+                sessionToken,
+                "{\"name\":\"session-access-test.txt\"}"
+        );
+
+        int downloadStatus = downloadConnection.getResponseCode();
+        String downloadBody = readResponseBody(downloadConnection);
+
+        assertEquals(200, downloadStatus);
+        assertTrue(downloadBody.contains("\"success\":true"));
+        assertTrue(downloadBody.contains("\"name\":\"session-access-test.txt\""));
+        assertTrue(downloadBody.contains("\"content\":\"session access test content\""));
+
+        downloadConnection.disconnect();
+    }
+
+    @Test
+    void fileOperationFlowWithValidSessionSucceeds() throws Exception {
+        String fileName = "file-operation-flow.txt";
+        String fileContent = "file operation flow content";
+
+        HttpURLConnection initialListConnection = createConnection("/files", "GET", sessionToken, null);
+
+        int initialListStatus = initialListConnection.getResponseCode();
+        String initialListBody = readResponseBody(initialListConnection);
+
+        assertEquals(200, initialListStatus);
+        assertTrue(initialListBody.contains("\"success\":true"));
+        assertTrue(initialListBody.contains("\"files\""));
+
+        initialListConnection.disconnect();
+
+        HttpURLConnection uploadConnection = createConnection(
+                "/upload",
+                "POST",
+                sessionToken,
+                "{\"name\":\"" + fileName + "\",\"content\":\"" + fileContent + "\"}"
+        );
+
+        int uploadStatus = uploadConnection.getResponseCode();
+        String uploadBody = readResponseBody(uploadConnection);
+
+        assertEquals(200, uploadStatus);
+        assertTrue(uploadBody.contains("\"success\":true"));
+        assertTrue(uploadBody.contains("\"name\":\"" + fileName + "\""));
+
+        uploadConnection.disconnect();
+
+        HttpURLConnection listAfterUploadConnection = createConnection("/files", "GET", sessionToken, null);
+
+        int listAfterUploadStatus = listAfterUploadConnection.getResponseCode();
+        String listAfterUploadBody = readResponseBody(listAfterUploadConnection);
+
+        assertEquals(200, listAfterUploadStatus);
+        assertTrue(listAfterUploadBody.contains("\"success\":true"));
+        assertTrue(listAfterUploadBody.contains("\"name\":\"" + fileName + "\""));
+
+        listAfterUploadConnection.disconnect();
+
+        HttpURLConnection downloadConnection = createConnection(
+                "/download",
+                "POST",
+                sessionToken,
+                "{\"name\":\"" + fileName + "\"}"
+        );
+
+        int downloadStatus = downloadConnection.getResponseCode();
+        String downloadBody = readResponseBody(downloadConnection);
+
+        assertEquals(200, downloadStatus);
+        assertTrue(downloadBody.contains("\"success\":true"));
+        assertTrue(downloadBody.contains("\"name\":\"" + fileName + "\""));
+        assertTrue(downloadBody.contains("\"content\":\"" + fileContent + "\""));
+
+        downloadConnection.disconnect();
+    }
+
+    @Test
     void invalidMethodReturns405() throws Exception {
         HttpURLConnection connection = createConnection("/files", "POST", sessionToken, null);
 
