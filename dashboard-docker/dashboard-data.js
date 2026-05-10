@@ -65,6 +65,32 @@ window.DashboardData = {
         return Promise.resolve(ERROR_CHART_DATA[range]);
     },
 
+    async getCustomerRiskMetrics() {
+        return Promise.resolve([
+            {
+                riskArea: "Login disruption",
+                metric: "Valid Login Success Rate",
+                currentValue: "92%",
+                status: "OK",
+                alertRule: "OK >= 90%, Warn 75-89%, Critical < 75%"
+            },
+            {
+                riskArea: "Session access disruption",
+                metric: "Protected Endpoint Access Success Rate",
+                currentValue: "85%",
+                status: "WARN",
+                alertRule: "OK >= 90%, Warn 75-89%, Critical < 75%"
+            },
+            {
+                riskArea: "File operation disruption",
+                metric: "File Operation Success Rate",
+                currentValue: "81%",
+                status: "WARN",
+                alertRule: "OK >= 90%, Warn 75-89%, Critical < 75%"
+            }
+        ]);
+    },
+
     async getEventData() {
         return Promise.resolve([
             {

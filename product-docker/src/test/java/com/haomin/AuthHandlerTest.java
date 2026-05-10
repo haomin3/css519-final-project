@@ -107,6 +107,41 @@ public class AuthHandlerTest {
         blockedConnection.disconnect();
     }
 
+    @Test
+    void blockedUserDoesNotPreventOtherUsersFromLoggingIn() throws Exception {
+        for(int i = 0; i < 3; i++) {
+            HttpURLConnection connection = createPostConnection("/auth",
+                    "{\"username\":\"admin\",\"password\":\"wrongpassword\"}");
+
+            assertEquals(401, connection.getResponseCode());
+            connection.disconnect();
+        }
+
+        HttpURLConnection blockedAdminConnection = createPostConnection("/auth",
+                "{\"username\":\"admin\",\"password\":\"password123\"}");
+
+        int blockedAdminStatus = blockedAdminConnection.getResponseCode();
+        String blockedAdminBody = readErrorBody(blockedAdminConnection);
+
+        assertEquals(403, blockedAdminStatus);
+        assertTrue(blockedAdminBody.contains("\"success\":false"));
+        assertTrue(blockedAdminBody.contains("\"error\":\"temporarily_blocked\""));
+
+        blockedAdminConnection.disconnect();
+
+        HttpURLConnection otherUserConnection = createPostConnection("/auth",
+                "{\"username\":\"haomin\",\"password\":\"reallylongpassword\"}");
+
+        int otherUserStatus = otherUserConnection.getResponseCode();
+        String otherUserBody = readResponseBody(otherUserConnection);
+
+        assertEquals(200, otherUserStatus);
+        assertTrue(otherUserBody.contains("\"success\":true"));
+        assertTrue(otherUserBody.contains("\"sessionToken\""));
+
+        otherUserConnection.disconnect();
+    }
+
     private HttpURLConnection createPostConnection(String path, String jsonBody) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) URI.create("http://localhost:8080" + path)
                 .toURL()
