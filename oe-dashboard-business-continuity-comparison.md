@@ -1,0 +1,16 @@
+# OE Dashboard and Business Continuity Comparison: Cloudsploitable
+This document compares the current live OE dashboard against the customer disruption and continuity risks previously identified for Cloudsploitable. The updated dashboard now receives OE data from the product through `GET /oe` and shows signals for key operational areas such as health, storage usage, active sessions, blocked users, authentication trends, error trends, customer disruption alert metrics, and recent operational events.
+
+The dashboard is useful for quick operational triage, but it is not a complete continuity monitoring system yet. Some summary values come from the running product, while average response time, authentication and error trend charts, customer disruption alert metrics, and recent operational events are still simulated. Deeper investigation still requires manual testing, API checks, automated test results, or code-level review.
+
+## 1. Comparison Table
+| Previous Business / Continuity Concern | Current Dashboard Coverage | Remaining Gap |
+|---|---|---|
+| Login disruption | The dashboard shows authentication success/failure trends and a Valid Login Success Rate metric. | The trend and success-rate values are still simulated, so the dashboard cannot yet confirm real login disruption from saved authentication history. |
+| Session access disruption | The dashboard shows active sessions, blocked users, unauthorized/session-related errors, and a Protected Endpoint Access Success Rate metric. | Active session and blocked-user counts are live, but protected endpoint success rate and error trends are still simulated and not broken down by `/files`, `/upload`, and `/download`. |
+| File operation disruption | The dashboard shows a File Operation Success Rate metric and recent file-related event examples such as upload, file listing, and file-not-found activity. | File operation success rate and recent events are still simulated, so the dashboard cannot yet calculate real file operation failure rates from runtime request history. |
+| Availability disruption | The dashboard shows health status and average response time. | Health is based on the product responding to `GET /oe`, but average response time is still simulated and the product does not yet track sustained outages or repeated failed health checks. |
+| Storage/capacity risk | The dashboard shows storage used based on the product’s current in-memory file data. | The storage limit is simulated and does not represent real disk or container capacity pressure. |
+| Error or misuse patterns | The dashboard shows error trends for `invalid_json`, `invalid_or_missing_session`, `temporarily_blocked`, `file_not_found`, and `method_not_allowed`. | Error trends are still simulated and are not yet calculated from actual request failures or grouped by endpoint. |
+| Incident investigation | The dashboard shows recent operational event examples and provides a search box for filtering them. | Recent events are still simulated examples rather than real runtime audit logs, so investigation still requires manual API checks, test output, or code review. |
+| Resource exhaustion | The dashboard indirectly shows availability, response time, and storage usage. | It does not yet collect CPU, memory, thread usage, active request count, or container-level resource metrics. |
