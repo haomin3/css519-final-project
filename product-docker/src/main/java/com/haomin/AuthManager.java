@@ -75,4 +75,17 @@ public class AuthManager {
         SessionInfo sessionInfo = VALID_TOKENS.get(token);
         return sessionInfo == null ? null : sessionInfo.username();
     }
+
+    public int getActiveSessionCount() {
+        long now = System.currentTimeMillis();
+        VALID_TOKENS.entrySet().removeIf(entry -> now > entry.getValue().expiresAt());
+        return VALID_TOKENS.size();
+    }
+
+    public int getBlockedUserCount() {
+        for(String username: BLOCKED_UNTIL.keySet()) {
+            isBlocked(username);
+        }
+        return BLOCKED_UNTIL.size();
+    }
 }
