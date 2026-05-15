@@ -23,3 +23,4 @@ The mock product now also includes a basic browser-based UI served by the same J
 - [(HW6) Manual Tests and Alert Gaps Document](manual-tests-and-alert-gaps.md)
 - [(HW7) Live OE Dashboard Questions and Gaps Document](live-oe-dashboard-questions-and-gaps.md)
 - [(HW7) OE Dashboard Business Continuity Comparison Document](oe-dashboard-business-continuity-comparison.md)
+- [(Presentation 2) Presentation Slides](presentation-2-slides.pdf)
